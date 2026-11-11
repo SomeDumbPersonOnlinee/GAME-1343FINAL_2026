@@ -10,12 +10,15 @@ public class GameManager : MonoBehaviour
     public int ComboScore = 0;
     public int Speed = 0;
     public int HighestCombo = 0;
+    public int HighestSpeed = 0;
 
     public TextMeshProUGUI QuotaScoreField;
     public TextMeshProUGUI ScoreField;
     public TextMeshProUGUI ComboScoreField;
     public TextMeshProUGUI SpeedField;
+
     public TextMeshProUGUI HighestComboField;
+    public TextMeshProUGUI HighestSpeedField;
 
 
 
@@ -26,6 +29,14 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if(ComboScore < HighestCombo)
+        {
+            HighestCombo = ComboScore;
+        }
+        if(Speed < HighestSpeed)
+        {
+            HighestSpeed = Speed;
+        }
         UpdateUI();
     }
 
@@ -35,6 +46,9 @@ public class GameManager : MonoBehaviour
         ScoreField.text = Score.ToString();
         ComboScoreField.text = ComboScore.ToString();
         SpeedField.text = Speed.ToString();
+
+        HighestComboField.text = HighestCombo.ToString();
+        HighestSpeedField.text = HighestSpeed.ToString();
     }
 
 }
