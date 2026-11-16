@@ -3,8 +3,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float Speed = 5f;
-    public float Lifetime = 5f;
     public bool FacingTarget = false;
+    public GameObject gameTarget;
 
     Rigidbody rb;
 
@@ -15,9 +15,14 @@ public class Projectile : MonoBehaviour
         rb.linearVelocity = gameObject.transform.forward * Speed;
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //This is where the Ricoshet and Hitting target stuff will happen (I think)
+
+        if(other == gameTarget)
+        {
+            DestroyProjectile();
+        }
     }
 
     void Update()
@@ -35,7 +40,9 @@ public class Projectile : MonoBehaviour
 
     public void DestroyProjectile()
     {
-        //This happens when you hit the target
-        Destroy(gameObject);
+        if(gameTarget)
+        {
+            Destroy(gameObject);
+        }
     }
 }
