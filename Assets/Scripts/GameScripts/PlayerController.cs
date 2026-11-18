@@ -5,21 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     public float rotationSpeed = 100f;
     bool hasShot = false;
-    bool canPose = false;
     public Transform projectileSpawner;
     public GameObject projectilePrefab;
 
     bool rotateLeft = false;
     bool rotateRight = false;
     bool shoot = false;
-    bool pause = false;
-    bool pose = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -30,25 +23,28 @@ public class PlayerController : MonoBehaviour
 
     public void controling()
     {
-        if(rotateLeft)
+        //This makes the player stop turing after they shoot
+        if(hasShot)
         {
-            RotatePlayer(-1);
+            if (rotateLeft || rotateRight)
+            {
+                Debug.Log("You can't move after you shoot");
+            }
         }
-        if (rotateRight)
+        else
         {
-            RotatePlayer(1);
+            if (rotateLeft)
+            {
+                RotatePlayer(-1);
+            }
+            if (rotateRight)
+            {
+                RotatePlayer(1);
+            }
         }
         if(shoot)
         {
-
-        }
-        if(pause)
-        {
-
-        }
-        if(pose)
-        {
-
+            shootProjectile();
         }
     }
     public void GetInput()
@@ -60,14 +56,11 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("Keyboard not working");
             return;
         }
-        //Important Keybinds
-        // A,D,W,P,T
 
-        rotateLeft = kb.aKey.wasPressedThisFrame;
-        rotateRight = kb.dKey.wasPressedThisFrame;
+        //Keybinds
+        rotateLeft = kb.aKey.isPressed;
+        rotateRight = kb.dKey.isPressed;
         shoot = kb.wKey.wasPressedThisFrame;
-        pause = kb.pKey.wasPressedThisFrame;
-        pose = kb.tKey.wasPressedThisFrame;
     }
 
     public void RotatePlayer(float value)
@@ -77,6 +70,8 @@ public class PlayerController : MonoBehaviour
 
     public void shootProjectile()
     {
+        //disables shooting after you shoot your shot
+        Debug.Log("pewpew");
         if(hasShot == false)
         {
             GameObject newProjectile = Instantiate(projectilePrefab, projectileSpawner.transform.position, projectileSpawner.transform.rotation);
@@ -87,13 +82,4 @@ public class PlayerController : MonoBehaviour
             Debug.Log("You have already fired your shot!");
         }
     }
-
-    public void strikeApose()
-    {
-        if(canPose)
-        {
-
-        }
-    }
-
 }

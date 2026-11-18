@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI HighestComboField;
     public TextMeshProUGUI HighestSpeedField;
 
+    bool pause = false;
 
 
     private void Awake()
@@ -38,6 +40,22 @@ public class GameManager : MonoBehaviour
             HighestSpeed = Speed;
         }
         UpdateUI();
+    }
+
+    public void GetInput()
+    {
+        Keyboard kb = Keyboard.current;
+
+        pause = kb.pKey.wasPressedThisFrame;
+    }
+
+    public void getProjectileValues(int pTotal, int sMAX, int cMAX, int sped, int comb)
+    {
+        Score = pTotal;
+        HighestCombo = cMAX;
+        HighestSpeed = sMAX;
+        Speed = sped;
+        ComboScore = comb;
     }
 
     public void UpdateUI()
